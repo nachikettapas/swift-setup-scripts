@@ -24,6 +24,7 @@ sudo apt-get install python-mock
 sudo pip install -r requirements.txt
 sudo pip install -r test-requirements.txt
 sudo pip install -U pip tox pbr virtualenv setuptools
+sudo pip install PyECLib
 sudo apt-get install libpython3.4-dev
 sudo python setup.py develop
 sudo apt-get remove python-six
