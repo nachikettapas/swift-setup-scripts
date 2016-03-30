@@ -20,3 +20,12 @@ sudo apt-get install python-netifaces
 sudo apt-get install python-pip
 sudo apt-get install python-dnspython
 sudo apt-get install python-mock
+
+sudo pip install -r requirements.txt
+sudo pip install -r test-requirements.txt
+sudo pip install -U pip tox pbr virtualenv setuptools
+sudo apt-get install libpython3.4-dev
+sudo python setup.py develop
+sudo apt-get remove python-six
+sudo pip install -U six
+
