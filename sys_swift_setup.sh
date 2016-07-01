@@ -20,6 +20,7 @@ SWIFT_MOUNT_BASE_DIR="/mnt"
 SWIFT_CONFIG_DIR="/etc/swift"
 SWIFT_RUN_DIR="/var/run/swift"
 SWIFT_CACHE_BASE_DIR="/var/cache"
+SWIFT_PROFILE_LOG_DIR="/tmp/log/swift/profile"
 
 #TODO: verify that swift user exists
 #TODO: verify that swift group exists
@@ -28,8 +29,10 @@ mkdir -p "${SWIFT_CONFIG_DIR}"
 mkdir -p "${SWIFT_DISK_BASE_DIR}"
 mkdir -p "${SWIFT_MOUNT_BASE_DIR}"
 mkdir -p "${SWIFT_RUN_DIR}"
+mkdir -p "${SWIFT_PROFILE_LOG_DIR}"
 
 chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_RUN_DIR}
+chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_PROFILE_LOG_DIR}
 
 SWIFT_DISK="${SWIFT_DISK_BASE_DIR}/swift-disk"
 for x in {1..8}; do
