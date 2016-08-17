@@ -9,6 +9,8 @@ sudo apt-get install xfsprogs
 sudo apt-get install git-core
 sudo apt-get install libffi-dev
 sudo apt-get install python-setuptools
+sudo apt-get install liberasurecode-dev
+sudo apt-get install libssl-dev
 sudo apt-get install python-coverage
 sudo apt-get install python-dev
 sudo apt-get install python-nose
