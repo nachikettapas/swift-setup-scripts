@@ -14,21 +14,14 @@ SWIFT_CACHE_BASE_DIR="/var/cache"
 SWIFT_TMP_LOG_DIR="/tmp/log/swift"
 
 # unmount loopbacks
-umount /mnt/1/node/sdb1
-umount /mnt/2/node/sdb2
-umount /mnt/3/node/sdb3
-umount /mnt/4/node/sdb4
-umount /mnt/1/node/sdb5
-umount /mnt/2/node/sdb6
-umount /mnt/3/node/sdb7
-umount /mnt/4/node/sdb8
+umount /mnt/sdb1
 
 # remove files and directories
 rm -rf ${SWIFT_DISK_BASE_DIR}
 rm -rf ${SWIFT_MOUNT_BASE_DIR}
 rm -rf ${SWIFT_CONFIG_DIR}
 rm -rf ${SWIFT_TMP_LOG_DIR}
-rm -rf /run/swift
+rm -rf ${SWIFT_RUN_DIR}
 for x in {1..4}; do
    rm -rf ${SWIFT_CACHE_BASE_DIR}/swift${x}
 done
