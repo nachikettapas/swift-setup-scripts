@@ -22,8 +22,27 @@ SWIFT_RUN_DIR="/var/run/swift"
 SWIFT_CACHE_BASE_DIR="/var/cache"
 SWIFT_PROFILE_LOG_DIR="/tmp/log/swift/profile"
 
-#TODO: verify that swift user exists
-#TODO: verify that swift group exists
+#verify that swift group exists
+if grep -q ${SWIFT_GROUP} /etc/group
+   then
+       echo "swift user group exists"
+   else
+       sudo groupadd ${SWIFT_GROUP}
+       echo "swift user group has been created"
+fi
+
+#verify swift user exists
+if grep -q ${SWIFT_USER} /etc/passwd
+   then
+       echo "swift user exists"
+   else
+       sudo useradd -g ${SWIFT_GROUP} -m -s /bin/bash ${SWIFT_USER}
+       echo "swift user has been created"
+#give sudo privileges to swift user and group
+       sudo echo "${SWIFT_GROUP} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+       sudo adduser ${SWIFT_USER} sudo
+       echo "swift user has been added to the sudo group"
+fi
 
 mkdir -p "${SWIFT_CONFIG_DIR}"
 mkdir -p "${SWIFT_DISK_BASE_DIR}"
@@ -35,31 +54,21 @@ chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_RUN_DIR}
 chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_PROFILE_LOG_DIR}
 
 SWIFT_DISK="${SWIFT_DISK_BASE_DIR}/swift-disk"
-for x in {1..8}; do
-   SWIFT_DISK="${SWIFT_DISK_BASE_DIR}/swift-disk${x}"
-   truncate -s "${SWIFT_DISK_SIZE_GB}GB" "${SWIFT_DISK}"
-   mkfs.xfs -f "${SWIFT_DISK}"
-done
+truncate -s "${SWIFT_DISK_SIZE_GB}GB" "${SWIFT_DISK}"
+mkfs.xfs -f "${SWIFT_DISK}"
 
 # good idea to have backup of fstab before we modify it
 cp /etc/fstab /etc/fstab.insert.bak
 
 cat >> /etc/fstab << EOF
-/srv/swift-disk1 /srv/1/node/sdb1 xfs loop,noatime,nodiratime,nobarrier,logbufs=8 0 0
-/srv/swift-disk2 /srv/2/node/sdb2 xfs loop,noatime,nodiratime,nobarrier,logbufs=8 0 0
-/srv/swift-disk3 /srv/3/node/sdb3 xfs loop,noatime,nodiratime,nobarrier,logbufs=8 0 0
-/srv/swift-disk4 /srv/4/node/sdb4 xfs loop,noatime,nodiratime,nobarrier,logbufs=8 0 0
-/srv/swift-disk5 /srv/1/node/sdb5 xfs loop,noatime,nodiratime,nobarrier,logbufs=8 0 0
-/srv/swift-disk6 /srv/2/node/sdb6 xfs loop,noatime,nodiratime,nobarrier,logbufs=8 0 0
-/srv/swift-disk7 /srv/3/node/sdb7 xfs loop,noatime,nodiratime,nobarrier,logbufs=8 0 0
-/srv/swift-disk8 /srv/4/node/sdb8 xfs loop,noatime,nodiratime,nobarrier,logbufs=8 0 0
+/srv/swift-disk /mnt/sdb1 xfs loop,noatime,nodiratime,nobarrier,logbufs=8 0 0
 EOF
 
 for x in {1..4}; do
    SWIFT_DISK_DIR="${SWIFT_DISK_BASE_DIR}/${x}"
-   SWIFT_MOUNT_DIR="${SWIFT_MOUNT_BASE_DIR}/${x}"
+   SWIFT_MOUNT_DIR="${SWIFT_MOUNT_BASE_DIR}/sdb1/${x}"
    SWIFT_CACHE_DIR="${SWIFT_CACHE_BASE_DIR}/swift${x}"
-   mkdir ${SWIFT_MOUNT_DIR}
+   sudo mkdir -p ${SWIFT_MOUNT_DIR}
    chown ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_MOUNT_DIR}
 
    # necessary? used anywhere?
@@ -83,13 +92,13 @@ chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_DISK_BASE_DIR}
 mount -a
 
 for x in {1..4}; do
-   SWIFT_MOUNT_DIR="${SWIFT_MOUNT_BASE_DIR}/${x}"
+   SWIFT_MOUNT_DIR="${SWIFT_MOUNT_BASE_DIR}/sdb1/${x}"
    chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_MOUNT_DIR}/node/
 done
 
 chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_DISK_BASE_DIR}
 
-# necessary? used anywhere?
+# used by swift recon to dump the stats to cache
 chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_CACHE_BASE_DIR}
 
 #*****************************************************************************
@@ -100,6 +109,7 @@ mkdir -p ${SWIFT_USER_BIN}
 
 SWIFT_LOGIN_CONFIG="${SWIFT_USER_HOME}/.bashrc"
 
+cd ${SWIFT_USER_HOME}
 #EXPORT_BLOCK_DEVICE="export SAIO_BLOCK_DEVICE=${SWIFT_DISK}"
 #grep "${EXPORT_BLOCK_DEVICE}" ${SWIFT_LOGIN_CONFIG}
 #if [ "$?" -ne "0" ]; then
@@ -116,11 +126,18 @@ if [ "$?" -ne "0" ]; then
 fi
 
 SWIFT_REPO_DIR="${SWIFT_USER_HOME}/swift"
+SWIFT_CLI_REPO_DIR="${SWIFT_USER_HOME}/python-swiftclient"
 
 if [ -d ${SWIFT_USER_HOME}/swift ]; then
    su - ${SWIFT_USER} -c 'cd swift && git pull'
 else
    su - ${SWIFT_USER} -c 'git clone https://github.com/openstack/swift'
+fi
+
+if [ -d ${SWIFT_USER_HOME}/python-swiftclient ]; then
+   su - ${SWIFT_USER} -c 'cd python-swiftclient && git pull'
+else
+   su - ${SWIFT_USER} -c 'git clone https://github.com/openstack/python-swiftclient'
 fi
 
 EXPORT_PATH="export PATH=${PATH}:${SWIFT_USER_BIN}:${SWIFT_USER_HOME}/swift/bin"
@@ -139,3 +156,17 @@ find ${SWIFT_CONFIG_DIR}/ -name \*.conf | xargs sed -i "s/<your-user-name>/${SWI
 
 cd ${SWIFT_REPO_DIR}/doc/saio/bin; cp * ${SWIFT_USER_BIN}; cd -
 
+cd ${SWIFT_REPO_DIR}
+sudo pip install -r requirements.txt
+sudo pip install -r test-requirements.txt
+sudo pip install -U pip tox pbr virtualenv setuptools
+sudo apt-get install libpython3.4-dev
+sudo python setup.py develop
+
+cd ${SWIFT_REPO_DIR}
+sudo pip install -r requirements.txt
+sudo pip install -r test-requirements.txt
+sudo pip install PyECLib
+sudo python setup.py develop
+sudo apt-get remove python-six
+sudo pip install -U six

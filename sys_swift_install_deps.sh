@@ -1,34 +1,36 @@
 #!/bin/sh
 sudo apt-get update
-sudo apt-get install curl
-sudo apt-get install gcc
-sudo apt-get install memcached
-sudo apt-get install rsync
-sudo apt-get install sqlite3
-sudo apt-get install xfsprogs
-sudo apt-get install git-core
-sudo apt-get install libffi-dev
-sudo apt-get install python-setuptools
-sudo apt-get install liberasurecode-dev
-sudo apt-get install libssl-dev
-sudo apt-get install python-coverage
-sudo apt-get install python-dev
-sudo apt-get install python-nose
-sudo apt-get install python-xattr
-sudo apt-get install python-eventlet
-sudo apt-get install python-greenlet
-sudo apt-get install python-pastedeploy
-sudo apt-get install python-netifaces
-sudo apt-get install python-pip
-sudo apt-get install python-dnspython
-sudo apt-get install python-mock
 
-sudo pip install -r requirements.txt
-sudo pip install -r test-requirements.txt
-sudo pip install -U pip tox pbr virtualenv setuptools
-sudo pip install PyECLib
-sudo apt-get install libpython3.4-dev
-sudo python setup.py develop
-sudo apt-get remove python-six
-sudo pip install -U six
+#trusty backports mirror contains liberasurecode=dev
+if ! grep -Fxq 'trusty-backports' /etc/apt/sources.list;
+    then
+        cat >> /etc/apt/sources.list << EOF
+deb http://us.archive.ubuntu.com/ubuntu trusty-backports main universe
+EOF
+fi
 
+sudo apt-get install -y curl
+sudo apt-get install -y gcc
+sudo apt-get install -y memcached
+sudo apt-get install -y rsync
+sudo apt-get install -y sqlite3
+sudo apt-get install -y xfsprogs
+sudo apt-get install -y git-core
+sudo apt-get install -y libffi-dev
+sudo apt-get install -y python-setuptools
+sudo apt-get install -y liberasurecode-dev
+sudo apt-get install -y libssl-dev
+sudo apt-get install -y python-coverage
+sudo apt-get install -y python-dev
+sudo apt-get install -y python-nose
+sudo apt-get install -y python-xattr
+sudo apt-get install -y python-eventlet
+sudo apt-get install -y python-greenlet
+sudo apt-get install -y python-pastedeploy
+sudo apt-get install -y python-netifaces
+sudo apt-get install -y python-dnspython
+sudo apt-get install -y python-mock
+
+#ubuntu 14.04 comes with older pip version. We get the latest version here
+wget https://bootstrap.pypa.io/get-pip.py
+sudo python get-pip.py
