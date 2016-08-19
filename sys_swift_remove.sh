@@ -27,4 +27,3 @@ for x in {1..4}; do
 done
 
 echo "don't forget to manually remove entries from /etc/fstab"
-
