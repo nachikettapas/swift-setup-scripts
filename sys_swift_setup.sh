@@ -136,6 +136,7 @@ cd ${SWIFT_REPO_DIR}/doc/saio/bin; cp * ${SWIFT_USER_BIN}; cd -
 
 #TODO: can this could be made better? (handle other paths)
 sed -i "/find \/var\/log\/swift/d" ${SWIFT_USER_BIN}/resetswift
+sed -i 's/\/dev\/sdb1/\/srv\/swift-disk/g' ${SWIFT_USER_BIN}/resetswift
 
 cd ${SWIFT_CLI_REPO_DIR}
 pip install -r requirements.txt
