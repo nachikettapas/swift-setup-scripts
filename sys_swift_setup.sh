@@ -22,28 +22,6 @@ SWIFT_RUN_DIR="/var/run/swift"
 SWIFT_CACHE_BASE_DIR="/var/cache"
 SWIFT_PROFILE_LOG_DIR="/tmp/log/swift/profile"
 
-#verify that swift group exists
-if grep -q ${SWIFT_GROUP} /etc/group; then
-    echo "swift user group exists"
-else
-   groupadd ${SWIFT_GROUP}
-    echo "swift user group has been created"
-fi
-
-#verify swift user exists
-if grep -q ${SWIFT_USER} /etc/passwd; then
-    echo "swift user exists"
-else
-   useradd -g ${SWIFT_GROUP} -m -s /bin/bash ${SWIFT_USER}
-    echo "swift user has been created"
-   #give  privileges to swift user and group
-    echo "${SWIFT_GROUP} ALL=(ALL) NOPASSWD: ALL" >> /etc/ers
-   adduser ${SWIFT_USER} 
-    echo "swift user has been added to the  group"
-fi
-
-su - ${SWIFT_USER}
-
 mkdir -p "${SWIFT_CONFIG_DIR}"
 mkdir -p "${SWIFT_DISK_BASE_DIR}"
 mkdir -p "${SWIFT_RUN_DIR}"
@@ -56,14 +34,6 @@ SWIFT_DISK="${SWIFT_DISK_BASE_DIR}/swift-disk"
 truncate -s "${SWIFT_DISK_SIZE_GB}GB" "${SWIFT_DISK}"
 mkfs.xfs -f "${SWIFT_DISK}"
 
-if [ -d ${SWIFT_MOUNT_BASE_DIR}/sdb1 ]; then
-   echo "folders exist"
-else
-   for x in {1..4}; do
-      mkdir "${SWIFT_MOUNT_BASE_DIR}/sdb1/${x}"
-   done
-fi 
-
 # good idea to have backup of fstab before we modify it
 cp /etc/fstab /etc/fstab.insert.bak
 
@@ -71,11 +41,21 @@ cat >> /etc/fstab << EOF
 /srv/swift-disk /mnt/sdb1 xfs loop,noatime,nodiratime,nobarrier,logbufs=8 0 0
 EOF
 
+SWIFT_MOUNT_POINT_DIR="${SWIFT_MOUNT_BASE_DIR}/sdb1"
+mkdir -p ${SWIFT_MOUNT_POINT_DIR}
+
+mount -a 
+
+for x in {1..4}; do
+   echo "creating folders"
+   mkdir "${SWIFT_MOUNT_POINT_DIR}/${x}"
+done
+
 for x in {1..4}; do
    SWIFT_DISK_DIR="${SWIFT_DISK_BASE_DIR}/${x}"
    SWIFT_MOUNT_DIR="${SWIFT_MOUNT_BASE_DIR}/sdb1/${x}"
    SWIFT_CACHE_DIR="${SWIFT_CACHE_BASE_DIR}/swift${x}"
-   chown ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_MOUNT_DIR}
+   chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_MOUNT_DIR}
 
    # necessary? used anywhere?
    mkdir -p "${SWIFT_CACHE_DIR}"
@@ -92,10 +72,6 @@ mkdir -p ${SWIFT_DISK_BASE_DIR}/1/node/sdb5
 mkdir -p ${SWIFT_DISK_BASE_DIR}/2/node/sdb6
 mkdir -p ${SWIFT_DISK_BASE_DIR}/3/node/sdb7
 mkdir -p ${SWIFT_DISK_BASE_DIR}/4/node/sdb8
-
-chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_DISK_BASE_DIR}
-
-mount -a
 
 chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_DISK_BASE_DIR}
 

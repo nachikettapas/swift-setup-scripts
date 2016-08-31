@@ -3,7 +3,7 @@ sudo apt-get update
 
 #trusty backports mirror contains liberasurecode=dev
 if ! sudo grep -q /etc/apt/sources.list -e 'trusty-backports'; then
-   cat >> /etc/apt/sources.list << EOF
+   sudo cat >> /etc/apt/sources.list << EOF
    deb http://us.archive.ubuntu.com/ubuntu trusty-backports main universe
 EOF
 fi
