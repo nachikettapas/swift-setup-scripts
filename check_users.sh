@@ -15,6 +15,8 @@ if grep -q ${SWIFT_USER} /etc/passwd; then
 else
    useradd -g ${SWIFT_GROUP} -m -s /bin/bash ${SWIFT_USER}
    echo "swift user has been created"
+   #set password for swift user
+   echo "swift\nswift" | passwd ${SWIFT_USER}
    #give  privileges to swift user and group
    echo "${SWIFT_GROUP} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
    adduser ${SWIFT_USER} sudo
