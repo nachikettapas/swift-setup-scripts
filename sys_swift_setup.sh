@@ -55,7 +55,6 @@ for x in {1..4}; do
    SWIFT_DISK_DIR="${SWIFT_DISK_BASE_DIR}/${x}"
    SWIFT_MOUNT_DIR="${SWIFT_MOUNT_BASE_DIR}/sdb1/${x}"
    SWIFT_CACHE_DIR="${SWIFT_CACHE_BASE_DIR}/swift${x}"
-   chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_MOUNT_DIR}
 
    # necessary? used anywhere?
    mkdir -p "${SWIFT_CACHE_DIR}"
@@ -74,6 +73,8 @@ mkdir -p ${SWIFT_DISK_BASE_DIR}/3/node/sdb7
 mkdir -p ${SWIFT_DISK_BASE_DIR}/4/node/sdb8
 
 chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_DISK_BASE_DIR}
+
+chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_MOUNT_DIR}
 
 # used by swift recon to dump the stats to cache
 chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_CACHE_BASE_DIR}
