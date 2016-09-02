@@ -143,16 +143,16 @@ sed -i "/find \/var\/log\/swift/d" ${SWIFT_USER_BIN}/resetswift
 sed -i 's/\/dev\/sdb1/\/srv\/swift-disk/g' ${SWIFT_USER_BIN}/resetswift
 
 cd ${SWIFT_CLI_REPO_DIR}
-pip install -r requirements.txt
-pip install -r test-requirements.txt
-pip install -U pip tox pbr virtualenv setuptools
-apt-get install libpython3.4-dev
+yes | pip install -r requirements.txt
+yes | pip install -r test-requirements.txt
+yes | pip install -U pip tox pbr virtualenv setuptools
+yes | apt-get install libpython3.4-dev
 python setup.py develop
 
 cd ${SWIFT_REPO_DIR}
-pip install -r requirements.txt
-pip install -r test-requirements.txt
-pip install PyECLib
+yes | pip install -r requirements.txt
+yes | pip install -r test-requirements.txt
+yes | pip install PyECLib
 python setup.py develop
 apt-get remove python-six
-pip install -U six
+yes | pip install -U six
