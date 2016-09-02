@@ -1,13 +1,9 @@
 #!/bin/sh
-sudo apt-get update
 
 #trusty backports mirror contains liberasurecode=dev
-if ! sudo grep -q /etc/apt/sources.list -e 'trusty-backports'; then
-   sudo cat >> /etc/apt/sources.list << EOF
-   deb http://us.archive.ubuntu.com/ubuntu trusty-backports main universe
-EOF
-fi
+sudo apt-add-repository "deb http://us.archive.ubuntu.com/ubuntu trusty-backports main universe"
 
+sudo apt-get update
 sudo apt-get install -y curl
 sudo apt-get install -y gcc
 sudo apt-get install -y memcached
