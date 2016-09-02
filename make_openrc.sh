@@ -19,3 +19,5 @@ export ST_USER=test:tester
 export ST_KEY=testing' >openrc
 
 chown ${SWIFT_USER}:${SWIFT_USER} openrc
+
+su - ${SWIFT_USER}

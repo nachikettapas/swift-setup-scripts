@@ -156,5 +156,3 @@ yes | pip install PyECLib
 python setup.py develop
 apt-get remove -y python-six
 yes | pip install -U six
-
-su - ${SWIFT_USER}
