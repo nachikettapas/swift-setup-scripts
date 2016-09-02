@@ -1,5 +1,10 @@
 #!/bin/bash
 
+###############################################
+# Script to destoy environment created for Swift
+################################################
+
+#Ensures script is run with root privileges
 if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root" 1>&2
    exit 1

@@ -1,3 +1,9 @@
+#!/bin/bash
+
+###########################################################
+# Scrip to check if "swift" exists; if not, will be created
+############################################################
+
 SWIFT_USER="swift"
 SWIFT_GROUP="swift"
 

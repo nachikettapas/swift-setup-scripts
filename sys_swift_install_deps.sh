@@ -1,5 +1,10 @@
 #!/bin/sh
 
+###################################################
+#Script ot install all required dependencies before 
+#installing Swift
+###################################################
+
 #trusty backports mirror contains liberasurecode=dev
 sudo apt-add-repository "deb http://us.archive.ubuntu.com/ubuntu trusty-backports main universe"
 

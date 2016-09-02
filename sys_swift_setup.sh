@@ -1,10 +1,22 @@
 #!/bin/bash
 
-#*************  QUESTIONS  *************
-# 1) /var/log/swift?
-# 2) /var/cache/swift?
+
+################################################
+# scripts to setup environment and install Swift
+################################################
+
+
+#*************General Information*************
+# 1) /var/log/swift - /etc/rsyslog.d/10-swift.conf is the log file that enables rsyslog to write logs to /var/log/swift
+# 2) /var/cache/swift - swift-recon dumps stats in the cache directory dedicated to each storage node
+# 3) /var/run/swift - swift processes's pids are stored in /var/run/swift. 
+# 4) /tmp/log/swift - a temporary directory used by some unit tests to run the profiler
+# 5) memcached service stores user credentials along with the tokens. It is important to ensure its running before starting the swift services
+# 6) This SAIO mimics the web solution  - 4 devices carved out 1 GB swift-disk and mounted as 4 loopback devices at /mnt/sdb1
 #***************************************
 
+
+# Ensures the script is being run as root
 if [[ $EUID -ne 0 ]]; then
     echo "This script must be run as root" 1>&2
    exit 1
@@ -56,7 +68,6 @@ for x in {1..4}; do
    SWIFT_MOUNT_DIR="${SWIFT_MOUNT_BASE_DIR}/sdb1/${x}"
    SWIFT_CACHE_DIR="${SWIFT_CACHE_BASE_DIR}/swift${x}"
 
-   # necessary? used anywhere?
    mkdir -p "${SWIFT_CACHE_DIR}"
 
    ln -s ${SWIFT_MOUNT_DIR} ${SWIFT_DISK_DIR}
@@ -79,8 +90,6 @@ chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_MOUNT_DIR}
 # used by swift recon to dump the stats to cache
 chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_CACHE_BASE_DIR}
 
-#*****************************************************************************
-
 SWIFT_USER_HOME="/home/${SWIFT_USER}"
 SWIFT_USER_BIN="${SWIFT_USER_HOME}/bin"
 mkdir -p ${SWIFT_USER_BIN}
@@ -88,12 +97,6 @@ mkdir -p ${SWIFT_USER_BIN}
 SWIFT_LOGIN_CONFIG="${SWIFT_USER_HOME}/.bashrc"
 
 cd ${SWIFT_USER_HOME}
-#EXPORT_BLOCK_DEVICE="export SAIO_BLOCK_DEVICE=${SWIFT_DISK}"
-#grep "${EXPORT_BLOCK_DEVICE}" ${SWIFT_LOGIN_CONFIG}
-#if [ "$?" -ne "0" ]; then
-#    echo "${EXPORT_BLOCK_DEVICE}" >> ${SWIFT_LOGIN_CONFIG}
-#fi
-
 
 EXPORT_TEST_CFG_FILE="export SWIFT_TEST_CONFIG_FILE=${SWIFT_CONFIG_DIR}/test.conf"
 grep "${EXPORT_TEST_CFG_FILE}" ${SWIFT_LOGIN_CONFIG}
