@@ -146,7 +146,7 @@ cd ${SWIFT_CLI_REPO_DIR}
 yes | pip install -r requirements.txt
 yes | pip install -r test-requirements.txt
 yes | pip install -U pip tox pbr virtualenv setuptools
-yes | apt-get install libpython3.4-dev
+apt-get install libpython3.4-dev
 python setup.py develop
 
 cd ${SWIFT_REPO_DIR}
