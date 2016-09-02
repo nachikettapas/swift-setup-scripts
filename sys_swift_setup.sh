@@ -146,7 +146,7 @@ cd ${SWIFT_CLI_REPO_DIR}
 yes | pip install -r requirements.txt
 yes | pip install -r test-requirements.txt
 yes | pip install -U pip tox pbr virtualenv setuptools
-apt-get install libpython3.4-dev
+apt-get install -y  libpython3.4-dev
 python setup.py develop
 
 cd ${SWIFT_REPO_DIR}
@@ -154,5 +154,7 @@ yes | pip install -r requirements.txt
 yes | pip install -r test-requirements.txt
 yes | pip install PyECLib
 python setup.py develop
-apt-get remove python-six
+apt-get remove -y python-six
 yes | pip install -U six
+
+su - ${SWIFT_USER}
