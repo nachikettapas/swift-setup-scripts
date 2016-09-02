@@ -85,7 +85,7 @@ mkdir -p ${SWIFT_DISK_BASE_DIR}/4/node/sdb8
 
 chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_DISK_BASE_DIR}
 
-chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_MOUNT_DIR}
+chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_MOUNT_BASE_DIR}
 
 # used by swift recon to dump the stats to cache
 chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_CACHE_BASE_DIR}
