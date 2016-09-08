@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ###########################################################
-# Scrip to check if "swift" exists; if not, will be created
+# Script to check if "swift" exists; if not, will be created
 ############################################################
 
 SWIFT_USER="swift"
@@ -21,8 +21,9 @@ if grep -q ${SWIFT_USER} /etc/passwd; then
 else
    useradd -g ${SWIFT_GROUP} -m -s /bin/bash ${SWIFT_USER}
    echo "swift user has been created"
-   #set password for swift user
+   #set no password for swift. 
    echo "${SWIFT_GROUP} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
    adduser ${SWIFT_USER} sudo
    echo "swift user has been added to the  group"
+   echo"try "sudo su swift" to switch to swift user and it will not prompt for password"
 fi
