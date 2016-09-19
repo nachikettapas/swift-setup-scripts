@@ -7,8 +7,7 @@ This setup mimics the layout of [SAIO - Swift All In One](http://docs.openstack.
 
 * ./one_step_setup.sh
 
-The above will setup swift and also start services.
-Next
+The above will setup swift and also start services. Next, you may source the openrc file and start using swift client subsequently.
 
 ##Order of execution for setting up swift using individual scripts:
 
