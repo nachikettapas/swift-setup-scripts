@@ -11,7 +11,7 @@ The above will setup swift and also start services. Next, you may source the ope
 
 ##Order of execution for setting up swift using individual scripts:
 
-1. ./sys_swift_install_deps.sh
+1. sudo ./sys_swift_install_deps.sh
 2. sudo ./check_users.sh
 3. sudo ./sys_swift_setup.sh
 4. sudo ./make_openrc.sh
