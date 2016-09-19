@@ -125,6 +125,7 @@ if [ "$?" -ne "0" ]; then
    echo "${EXPORT_PATH}" >> ${SWIFT_LOGIN_CONFIG}
 fi
 
+
 echo "export PYTHONPATH=${SWIFT_USER_HOME}/swift" >> ${SWIFT_LOGIN_CONFIG}
 
 cp ${SWIFT_REPO_DIR}/test/sample.conf ${SWIFT_CONFIG_DIR}/test.conf
@@ -136,7 +137,8 @@ find ${SWIFT_CONFIG_DIR}/ -name \*.conf | xargs sed -i "s/<your-user-name>/${SWI
 cp ${SWIFT_REPO_DIR}/doc/saio/rsyslog.d/10-swift.conf /etc/rsyslog.d/
 sed -i '2 s/^#//' /etc/rsyslog.d/10-swift.conf
 
-cd ${SWIFT_REPO_DIR}/doc/saio/bin; cp * ${SWIFT_USER_BIN}; cd -
+cd ${SWIFT_REPO_DIR}/doc/saio/bin; cp * ${SWIFT_USER_BIN};
+chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_USER_BIN}; cd -
 
 #TODO: can this could be made better? (handle other paths)
 sed -i "/find \/var\/log\/swift/d" ${SWIFT_USER_BIN}/resetswift

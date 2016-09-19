@@ -6,31 +6,31 @@
 ###################################################
 
 #trusty backports mirror contains liberasurecode=dev
-sudo apt-add-repository "deb http://us.archive.ubuntu.com/ubuntu trusty-backports main universe"
+apt-add-repository "deb http://us.archive.ubuntu.com/ubuntu trusty-backports main universe"
 
-sudo apt-get update
-sudo apt-get install -y curl
-sudo apt-get install -y gcc
-sudo apt-get install -y memcached
-sudo apt-get install -y rsync
-sudo apt-get install -y sqlite3
-sudo apt-get install -y xfsprogs
-sudo apt-get install -y git-core
-sudo apt-get install -y libffi-dev
-sudo apt-get install -y python-setuptools
-sudo apt-get install -y liberasurecode-dev
-sudo apt-get install -y libssl-dev
-sudo apt-get install -y python-coverage
-sudo apt-get install -y python-dev
-sudo apt-get install -y python-nose
-sudo apt-get install -y python-xattr
-sudo apt-get install -y python-eventlet
-sudo apt-get install -y python-greenlet
-sudo apt-get install -y python-pastedeploy
-sudo apt-get install -y python-netifaces
-sudo apt-get install -y python-dnspython
-sudo apt-get install -y python-mock
+apt-get update
+apt-get install -y curl
+apt-get install -y gcc
+apt-get install -y memcached
+apt-get install -y rsync
+apt-get install -y sqlite3
+apt-get install -y xfsprogs
+apt-get install -y git-core
+apt-get install -y libffi-dev
+apt-get install -y python-setuptools
+apt-get install -y liberasurecode-dev
+apt-get install -y libssl-dev
+apt-get install -y python-coverage
+apt-get install -y python-dev
+apt-get install -y python-nose
+apt-get install -y python-xattr
+apt-get install -y python-eventlet
+apt-get install -y python-greenlet
+apt-get install -y python-pastedeploy
+apt-get install -y python-netifaces
+apt-get install -y python-dnspython
+apt-get install -y python-mock
 
 #ubuntu 14.04 comes with older pip version. We get the latest version here
 wget https://bootstrap.pypa.io/get-pip.py
-sudo python get-pip.py
+python get-pip.py
