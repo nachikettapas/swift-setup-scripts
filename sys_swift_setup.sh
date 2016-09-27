@@ -157,23 +157,17 @@ sed -i '2 s/^#//' /etc/rsyslog.d/10-swift.conf
 cd ${SWIFT_REPO_DIR}/doc/saio/bin; cp * ${SWIFT_USER_BIN};
 chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_USER_BIN}; cd -
 
-#TODO: can this could be made better? (handle other paths)
 sed -i "/find \/var\/log\/swift/d" ${SWIFT_USER_BIN}/resetswift
 sed -i 's/\/dev\/sdb1/\/srv\/swift-disk/g' ${SWIFT_USER_BIN}/resetswift
 
 cd ${SWIFT_CLI_REPO_DIR}
 yes | pip install -r requirements.txt
 yes | pip install -r test-requirements.txt
-yes | pip install -U pip tox pbr virtualenv setuptools
-apt-get install -y  libpython3.4-dev
 python setup.py develop
 chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_CLI_REPO_DIR}
 
 cd ${SWIFT_REPO_DIR}
 yes | pip install -r requirements.txt
 yes | pip install -r test-requirements.txt
-yes | pip install PyECLib
 python setup.py develop
-apt-get remove -y python-six
-yes | pip install -U six
 chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_REPO_DIR}
