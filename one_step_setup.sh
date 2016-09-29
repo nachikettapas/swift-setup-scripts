@@ -28,11 +28,6 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-#Common Variables
-SWIFT_HOME_DIR=/home/swift
-SWIFT_USER=swift
-SWIFT_GROUP=swift
-
 ./sys_swift_check_users.sh
 ./sys_swift_install_deps.sh
 ./sys_swift_setup.sh

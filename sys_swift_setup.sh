@@ -39,8 +39,8 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-#SWIFT_USER="swift"
-#SWIFT_GROUP="swift"
+SWIFT_USER="swift"
+SWIFT_GROUP="swift"
 
 SWIFT_DISK_SIZE_GB="1"
 SWIFT_DISK_BASE_DIR="/srv"

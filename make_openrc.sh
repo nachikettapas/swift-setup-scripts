@@ -27,9 +27,9 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-#SWIFT_HOME_DIR=/home/swift
-#SWIFT_USER=swift
-#SWIFT_GROUP=swift
+SWIFT_HOME_DIR=/home/swift
+SWIFT_USER=swift
+SWIFT_GROUP=swift
 
 cd ${SWIFT_HOME_DIR}
 echo  'export ST_AUTH=http://127.0.0.1:8080/auth/v1.0

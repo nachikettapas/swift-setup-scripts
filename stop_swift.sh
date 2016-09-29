@@ -22,4 +22,6 @@
 #  script to stop all services of Swift
 ############################################
 
+SWIFT_USER="swift"
+
 su - ${SWIFT_USER} -c 'swift-init all stop'

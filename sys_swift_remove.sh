@@ -28,13 +28,13 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-#SWIFT_DISK_BASE_DIR="/srv"
-#SWIFT_MOUNT_BASE_DIR="/mnt"
+SWIFT_DISK_BASE_DIR="/srv"
+SWIFT_MOUNT_BASE_DIR="/mnt"
 
-#SWIFT_CONFIG_DIR="/etc/swift"
-#SWIFT_RUN_DIR="/var/run/swift"
-#SWIFT_CACHE_BASE_DIR="/var/cache"
-#SWIFT_TMP_LOG_DIR="/tmp/log/swift"
+SWIFT_CONFIG_DIR="/etc/swift"
+SWIFT_RUN_DIR="/var/run/swift"
+SWIFT_CACHE_BASE_DIR="/var/cache"
+SWIFT_PROFILE_LOG_DIR="/tmp/log/swift"
 
 # unmount loopbacks
 umount /mnt/sdb1
