@@ -16,5 +16,7 @@ source openrc and start using Swift
 
 ##Remove Swift:
 
-1. sudo ./stop_swift.sh 
-2. sudo ./sys_swift_remove.sh
+```bash
+sudo ./stop_swift.sh 
+sudo ./sys_swift_remove.sh
+```
