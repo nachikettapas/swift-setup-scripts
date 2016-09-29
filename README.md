@@ -11,8 +11,7 @@ These scripts as targetted and tested for Ubuntu 14.04
 sudo ./one_step_setup.sh
 ```
 
-At this point, Swift is installed and is running.
-source openrc and start using Swift
+At this point, Swift is installed and is running; source openrc and start using Swift
 
 ##Remove Swift:
 
