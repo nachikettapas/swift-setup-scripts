@@ -18,7 +18,8 @@
 # limitations under the License.
 
 
-SWIFT_USER=swift
-
+############################################
+#  script to stop all services of Swift
+############################################
 
 su - ${SWIFT_USER} -c 'swift-init all stop'

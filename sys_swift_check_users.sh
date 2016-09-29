@@ -25,23 +25,35 @@
 SWIFT_USER="swift"
 SWIFT_GROUP="swift"
 
+# Ensures the script is being run as root
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
 #verify that swift group exists
 if grep -q ${SWIFT_GROUP} /etc/group; then
     echo "swift user group exists"
 else
    groupadd ${SWIFT_GROUP}
-    echo "swift user group has been created"
+   echo "swift user group has been created"
 fi
 
 #verify swift user exists
 if grep -q ${SWIFT_USER} /etc/passwd; then
-    echo "swift user exists"
+   echo "swift user exists"
 else
-   useradd -g ${SWIFT_GROUP} -m -s /bin/bash ${SWIFT_USER}
-   echo "swift user has been created"
-   #set no password for swift. 
-   echo "${SWIFT_GROUP} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-   adduser ${SWIFT_USER} sudo
-   echo "swift user has been added to the  group"
-   echo"try "sudo su swift" to switch to swift user and it will not prompt for password"
-fi
+  useradd -g ${SWIFT_GROUP} -m -s /bin/bash ${SWIFT_USER}
+  echo "swift user has been created"
+   
+  #add user to sudo group
+  adduser ${SWIFT_USER} sudo
+  echo "swift user has been added to the  group"
+  echo "try 'sudo su swift' to switch to swift user and it will not prompt for password"
+   
+#set no password for swift. 
+if grep -q ${SWIFT_GROUP} /etc/sudoers; then
+  continue
+else
+  echo "${SWIFT_GROUP} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+fi   

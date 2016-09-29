@@ -18,10 +18,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-SWIFT_USER=swift
+############################################
+# Script to start all main services of Swift
+############################################
 
 su - ${SWIFT_USER} -c 'remakerings'
-su - ${SWIFT_USER} -c 'source /home/swift/openrc'
+su - ${SWIFT_USER} -c "source ${SWIFT_USER_HOME}/openrc"
 su - ${SWIFT_USER} -c 'startmain'
 su - ${SWIFT_USER}

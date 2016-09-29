@@ -35,12 +35,12 @@
 
 # Ensures the script is being run as root
 if [[ $EUID -ne 0 ]]; then
-    echo "This script must be run as root" 1>&2
+   echo "This script must be run as root" 1>&2
    exit 1
 fi
 
-SWIFT_USER="swift"
-SWIFT_GROUP="swift"
+#SWIFT_USER="swift"
+#SWIFT_GROUP="swift"
 
 SWIFT_DISK_SIZE_GB="1"
 SWIFT_DISK_BASE_DIR="/srv"

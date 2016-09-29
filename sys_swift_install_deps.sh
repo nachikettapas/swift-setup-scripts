@@ -20,9 +20,16 @@
 
 
 ###################################################
-#Script ot install all required dependencies before 
+#Script to install all required dependencies before 
 #installing Swift
 ###################################################
+
+
+# Ensures the script is being run as root
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
 
 #trusty backports mirror contains liberasurecode=dev
 apt-add-repository "deb http://us.archive.ubuntu.com/ubuntu trusty-backports main universe"

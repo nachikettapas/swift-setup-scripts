@@ -17,9 +17,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-##This is a one step setup script
-sudo ./sys_swift_check_users.sh
-sudo ./sys_swift_install_deps.sh
-sudo ./sys_swift_setup.sh
-sudo ./make_openrc.sh
-sudo ./start_swift.sh
+###############################################
+#   This is a one step setup script
+###############################################
+
+
+# Ensures the script is being run as root
+if [[ $EUID -ne 0 ]]; then
+    echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
+#Common Variables
+SWIFT_HOME_DIR=/home/swift
+SWIFT_USER=swift
+SWIFT_GROUP=swift
+
+./sys_swift_check_users.sh
+./sys_swift_install_deps.sh
+./sys_swift_setup.sh
+./make_openrc.sh
+./start_swift.sh
