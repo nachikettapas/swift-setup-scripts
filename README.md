@@ -3,7 +3,7 @@
 A set of bash scripts with comments inline to install Swift All in One.
 This setup mimics the layout of [SAIO - Swift All In One](http://docs.openstack.org/developer/swift/development_saio.html)
 
-These scripts as targetted and tested for Ubuntu 14.04
+These scripts as targeted and tested for Ubuntu 14.04
 
 ##One-step setup:
 

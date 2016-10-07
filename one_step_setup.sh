@@ -28,6 +28,10 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
+export SWIFT_USER="swift"
+export SWIFT_GROUP="swift"
+export SWIFT_USER_HOME="/home/${SWIFT_USER}"
+
 ./sys_swift_check_users.sh
 ./sys_swift_install_deps.sh
 ./sys_swift_setup.sh

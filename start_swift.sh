@@ -21,9 +21,18 @@
 ############################################
 # Script to start all main services of Swift
 ############################################
-SWIFT_USER="swift"
-SWIFT_GROUP="swift"
-SWIFT_USER_HOME="/home/${SWIFT_USER}"
+
+if [ "" = "${SWIFT_USER}" ]; then
+   export SWIFT_USER="swift"
+fi
+ 
+if [ "" = "${SWIFT_GROUP}" ]; then
+   export SWIFT_GROUP="swift"
+fi 
+
+if [ "" = "${SWIFT_USER_HOME}" ]; then
+   export SWIFT_USER_HOME="/home/${SWIFT_USER}"
+fi
 
 su - ${SWIFT_USER} -c 'remakerings'
 su - ${SWIFT_USER} -c "source ${SWIFT_USER_HOME}/openrc"

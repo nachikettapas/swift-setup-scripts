@@ -28,8 +28,13 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-SWIFT_USER="swift"
-SWIFT_GROUP="swift"
+if [ "" = "${SWIFT_USER}" ]; then
+   export SWIFT_USER="swift"
+fi
+
+if [ "" = "${SWIFT_GROUP}" ]; then
+   export SWIFT_GROUP="swift"
+fi
 
 #verify that swift group exists
 if grep -q ${SWIFT_GROUP} /etc/group; then
@@ -56,5 +61,5 @@ fi
 if grep -q ${SWIFT_GROUP} /etc/sudoers; then
   continue
 else
-  echo "${SWIFT_GROUP} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+  echo "%${SWIFT_GROUP} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 fi   
