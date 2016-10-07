@@ -66,6 +66,7 @@ mkfs.xfs -f "${SWIFT_DISK}"
 # good idea to have backup of fstab before we modify it
 cp /etc/fstab /etc/fstab.insert.bak
 
+#TODO check whether swift-disk entry already exists
 cat >> /etc/fstab << EOF
 /srv/swift-disk /mnt/sdb1 xfs loop,noatime,nodiratime,nobarrier,logbufs=8 0 0
 EOF
@@ -76,7 +77,6 @@ mkdir -p ${SWIFT_MOUNT_POINT_DIR}
 mount -a 
 
 for x in {1..4}; do
-   echo "creating folders"
    mkdir "${SWIFT_MOUNT_POINT_DIR}/${x}"
 done
 

@@ -56,7 +56,7 @@ apt-get install -y python-pastedeploy
 apt-get install -y python-netifaces
 apt-get install -y python-dnspython
 apt-get install -y python-mock
-apt-get install -y  libpython3.4-dev
+apt-get install -y libpython3.4-dev
 apt-get remove -y python-six
 
 #ubuntu 14.04 comes with older pip version. We get the latest version here
