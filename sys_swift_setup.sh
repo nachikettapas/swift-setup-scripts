@@ -160,6 +160,8 @@ chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_USER_BIN}; cd -
 sed -i "/find \/var\/log\/swift/d" ${SWIFT_USER_BIN}/resetswift
 sed -i 's/\/dev\/sdb1/\/srv\/swift-disk/g' ${SWIFT_USER_BIN}/resetswift
 
+#install SAIO in development mode
+#Use python setup.py install in order to install the application
 cd ${SWIFT_CLI_REPO_DIR}
 yes | pip install -r requirements.txt
 yes | pip install -r test-requirements.txt
