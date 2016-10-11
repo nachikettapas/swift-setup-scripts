@@ -36,4 +36,8 @@ export SWIFT_USER_HOME="/home/${SWIFT_USER}"
 ./sys_swift_install_deps.sh
 ./sys_swift_setup.sh
 ./make_openrc.sh
+cp start_swift.sh ${SWIFT_USER_HOME}
+chown ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_USER_HOME}/start_swift.sh
+cp stop_swift.sh ${SWIFT_USER_HOME}
+chown ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_USER_HOME}/stop_swift.sh
 ./start_swift.sh
