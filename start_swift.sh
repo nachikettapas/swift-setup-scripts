@@ -25,16 +25,18 @@
 if [ "" = "${SWIFT_USER}" ]; then
    export SWIFT_USER="swift"
 fi
- 
+
 if [ "" = "${SWIFT_GROUP}" ]; then
    export SWIFT_GROUP="swift"
-fi 
-
-if [ "" = "${SWIFT_USER_HOME}" ]; then
-   export SWIFT_USER_HOME="/home/${SWIFT_USER}"
 fi
 
-su - ${SWIFT_USER} -c 'remakerings'
-su - ${SWIFT_USER} -c "source ${SWIFT_USER_HOME}/openrc"
+if [ ! -d "/var/run/swift" ]; then
+   mkdir /var/run/swift
+   chown ${SWIFT_USER}:${SWIFT_GROUP} /var/run/swift
+fi
+
+if [ ! -f "/etc/swift/account.ring.gz" ]; then
+   su - ${SWIFT_USER} -c 'remakerings'
+fi
+ 
 su - ${SWIFT_USER} -c 'startmain'
-su - ${SWIFT_USER}
