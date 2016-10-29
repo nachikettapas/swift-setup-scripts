@@ -40,4 +40,5 @@ cp start_swift.sh ${SWIFT_USER_HOME}
 chown ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_USER_HOME}/start_swift.sh
 cp stop_swift.sh ${SWIFT_USER_HOME}
 chown ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_USER_HOME}/stop_swift.sh
-./start_swift.sh
+su - ${SWIFT_USER} -c 'remakerings'
+su - ${SWIFT_USER} -c 'swift-init start main'
