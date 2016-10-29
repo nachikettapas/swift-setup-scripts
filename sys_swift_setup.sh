@@ -61,6 +61,7 @@ mkdir -p "${SWIFT_LOG_DIR}"
 chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_RUN_DIR}
 chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_PROFILE_LOG_DIR}
 chown -R syslog.adm ${SWIFT_LOG_DIR}
+chmod -R g+w ${SWIFT_LOG_DIR}
 
 SWIFT_DISK="${SWIFT_DISK_BASE_DIR}/swift-disk"
 truncate -s "${SWIFT_DISK_SIZE_GB}GB" "${SWIFT_DISK}"
