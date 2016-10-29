@@ -156,7 +156,7 @@ find ${SWIFT_CONFIG_DIR}/ -name \*.conf | xargs sed -i "s/<your-user-name>/${SWI
 
 cp ${SWIFT_REPO_DIR}/doc/saio/rsyslog.d/10-swift.conf /etc/rsyslog.d/
 sed -i '2 s/^#//' /etc/rsyslog.d/10-swift.conf
-sed -i 's/^\($PrivDropToGroup \)\(.*\)/echo "\1adm"/ge' /etc/rsyslog.conf
+sed -i 's/PrivDropToGroup syslog/PrivDropToGroup adm/g' /etc/rsyslog.conf
 
 cd ${SWIFT_REPO_DIR}/doc/saio/bin; cp * ${SWIFT_USER_BIN};
 chown -R ${SWIFT_USER}:${SWIFT_GROUP} ${SWIFT_USER_BIN}; cd -
