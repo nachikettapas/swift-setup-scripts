@@ -36,7 +36,7 @@ if [ ! -d "/var/run/swift" ]; then
 fi
 
 if [ ! -f "/etc/swift/account.ring.gz" ]; then
-   su - ${SWIFT_USER} -c 'remakerings'
+   remakerings
 fi
  
-su - ${SWIFT_USER} -c 'startmain'
+startmain

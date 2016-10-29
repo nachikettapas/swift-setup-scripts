@@ -26,4 +26,4 @@ if [ "" = "${SWIFT_USER}" ]; then
    export SWIFT_USER="swift"
 fi
 
-su - ${SWIFT_USER} -c 'swift-init all stop'
+swift-init all stop
