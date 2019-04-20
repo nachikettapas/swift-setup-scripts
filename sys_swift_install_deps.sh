@@ -32,7 +32,8 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 #trusty backports mirror contains liberasurecode=dev
-apt-add-repository "deb http://us.archive.ubuntu.com/ubuntu trusty-backports main universe"
+#apt-add-repository "deb http://us.archive.ubuntu.com/ubuntu trusty-backports main universe"
+
 
 apt-get update
 apt-get install -y curl
@@ -44,7 +45,7 @@ apt-get install -y xfsprogs
 apt-get install -y git-core
 apt-get install -y libffi-dev
 apt-get install -y python-setuptools
-apt-get install -y liberasurecode-dev
+#apt-get install -y liberasurecode-dev
 apt-get install -y libssl-dev
 apt-get install -y python-coverage
 apt-get install -y python-dev
@@ -56,7 +57,7 @@ apt-get install -y python-pastedeploy
 apt-get install -y python-netifaces
 apt-get install -y python-dnspython
 apt-get install -y python-mock
-apt-get install -y libpython3.4-dev
+apt-get install -y libpython3.5-dev
 apt-get remove -y python-six
 
 #ubuntu 14.04 comes with older pip version. We get the latest version here
