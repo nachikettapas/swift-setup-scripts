@@ -46,6 +46,7 @@ apt-get install -y git-core
 apt-get install -y libffi-dev
 apt-get install -y python-setuptools
 #apt-get install -y liberasurecode-dev
+./sys_liberasurecode
 apt-get install -y libssl-dev
 apt-get install -y python-coverage
 apt-get install -y python-dev

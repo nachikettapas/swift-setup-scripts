@@ -1,10 +1,14 @@
-#For liberasurecode
+#!/bin/bash
+
 apt-get install -y build-essential 
 apt-get install -y autoconf 
 apt-get install -y automake 
 apt-get install -y libtool
+apt-get install -y libz-dev
 
+cd ${HOME}
 git clone https://github.com/openstack/liberasurecode.git
+cd ${HOME}/liberasurecode
 ./autogen.sh
 ./configure
 make
